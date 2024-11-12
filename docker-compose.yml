@@ -1,0 +1,54 @@
+
+services:
+  mysql_usuario:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: usuario
+    ports:
+      - "3306:3306"
+    networks:
+      - mysql_network
+
+  mysql_administrador:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: administrador
+    ports:
+      - "3307:3306"
+    networks:
+      - mysql_network
+
+  mysql_mantenimiento:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: mantenimiento
+    ports:
+      - "3308:3306"
+    networks:
+      - mysql_network
+
+  mysql_monopatin:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: monopatin
+    ports:
+      - "3309:3306"
+    networks:
+      - mysql_network
+
+  mysql_viaje:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: viaje
+    ports:
+      - "3310:3306"
+    networks:
+      - mysql_network
+
+networks:
+  mysql_network:
