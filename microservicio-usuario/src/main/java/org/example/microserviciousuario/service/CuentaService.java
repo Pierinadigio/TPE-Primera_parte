@@ -109,15 +109,12 @@ public class CuentaService {
         Cuenta cuenta = cuentaRepository.findById(cuentaId)
                 .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
 
-        // Validamos si la cuenta ya está anulada
         if (cuenta.isAnulada()) {
             throw new RuntimeException("La cuenta ya está anulada");
         }
 
-        // Actualizamos el estado de la cuenta a anulada
         cuenta.setAnulada(cuentaDTO.isAnulada());
 
-        // Guardamos los cambios
         cuentaRepository.save(cuenta);
     }
 }

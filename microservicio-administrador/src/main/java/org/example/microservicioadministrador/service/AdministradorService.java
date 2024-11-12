@@ -169,13 +169,10 @@ public class AdministradorService {
             } else {
                 throw new RuntimeException("Error al calcular el tiempo de uso: " + tiempoUsoResponse.getStatusCode());
             }
-
-                // Actualizar total de kilómetros recorridos
                 double kmRecorridos = viaje.getTotalKmRecorridos();
                 monopatin.setTotalKmRecorridos(monopatin.getTotalKmRecorridos() + kmRecorridos);
                 monopatin.setLatitud(parada.getLatitud());
 
-                // Guardar cambios en el viaje y el monopatín
                 viajeClient.updateViaje(viajeId,viaje);
                 monopatinClient.guardarMonopatin(monopatin);
 
