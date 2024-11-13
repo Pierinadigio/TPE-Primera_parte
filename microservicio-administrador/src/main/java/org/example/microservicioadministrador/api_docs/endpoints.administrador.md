@@ -56,8 +56,7 @@ Este microservicio está diseñado para gestionar las funciones administrativas,
     - `fechaAjuste` (LocalDate) - Fecha en la que se realiza el ajuste de tarifas.
     - `porcentajeBase` (double) - Porcentaje de ajuste sobre la tarifa base por minuto.
     - `porcentajeExtra` (double) - Porcentaje de ajuste sobre la tarifa extra por minuto.
-- **Código de respuesta**: `200 OK` (si el ajuste es exitoso), `500 Internal Server Error` (si ocurre un error).
-
+-
 ---
 
 ### 6. Ubicar un monopatín en una parada

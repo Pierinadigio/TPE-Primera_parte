@@ -71,24 +71,6 @@ public class AdministradorController {
     }
 
 
-
-    // Endpoint para ubicar un monopatín en una parada
-    @PostMapping("/viaje/{viajeId}/monopatin/{monopatinId}/parada/{paradaId}")
-    public ResponseEntity<Void> ubicarMonopatinEnParada(
-            @PathVariable Long viajeId,
-            @PathVariable Long monopatinId,
-            @PathVariable Long paradaId) {
-        administradorService.ubicarMonopatinEnParada(viajeId, monopatinId, paradaId);
-        return ResponseEntity.noContent().build();
-    }
-
-
-
-
-
-
-
-
     // Endpoint para agregar un monopatín
     @PostMapping("/monopatines")
     public ResponseEntity<MonopatinDTO> agregarMonopatin(@RequestBody MonopatinDTO monopatin) {

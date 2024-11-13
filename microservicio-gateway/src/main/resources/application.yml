@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: micromonopatin
+            uri:  http://localhost:8009
+            predicates:
+              - Path=/monopatines/**
+          - id: microusuario
+            uri: http://localhost:8006
+            predicates:
+              - Path=/usuarios/**,/cuentas/**
+          - id: microviaje
+            uri: http://localhost:8010
+            predicates:
+              - Path=/viajes/**,/pausas**
+          - id: microadministrador
+            uri: http://localhost:8007
+            predicates:
+              - Path=/administrador/**,/paradas/**,tarifas/**
+          - id: micromantenimiento
+            uri: http://localhost:8008
+            predicates:
+              - Path=/mantenimiento/**
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+
+
+
+

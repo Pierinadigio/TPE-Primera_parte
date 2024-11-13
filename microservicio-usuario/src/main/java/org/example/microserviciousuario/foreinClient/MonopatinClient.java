@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-@FeignClient(name = "microservicio-monopatin", url = "http://localhost:8009/monopatines")
+@FeignClient(name = "microservicio-monopatin", url = "http://localhost:8009")
 public interface MonopatinClient {
 
 
-    @GetMapping
+    @GetMapping ("/monopatines")
     ResponseEntity<List<MonopatinDTO>> getAllMonopatines();
 }

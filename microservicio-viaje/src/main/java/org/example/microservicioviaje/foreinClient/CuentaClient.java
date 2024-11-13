@@ -6,18 +6,18 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "microservicio-usuario", url = "http://localhost:8006/cuentas")
+@FeignClient(name = "microservicio-usuario", url = "http://localhost:8006")
 public interface CuentaClient {
 
-    @GetMapping("/{id}")
+    @GetMapping("/cuentas/{id}")
     ResponseEntity<CuentaDTO> getCuenta(@PathVariable Long id);
 
-    @PutMapping("/{id}/descontar")
+    @PutMapping("/cuentas/{id}/descontar")
     ResponseEntity<String> descontarSaldo(@PathVariable Long id, @RequestParam double monto);
 
-    @PutMapping("/{id}")
+    @PutMapping("/cuentas/{id}")
     ResponseEntity<Cuenta> updateCuenta(@PathVariable Long id, @RequestBody CuentaDTO cuentaDTO);
 
-    @GetMapping("/cuenta/{id}")
+    @GetMapping("/cuentas/cuenta/{id}")
     boolean existeCuenta(@PathVariable("id") Long cuentaId);
 }

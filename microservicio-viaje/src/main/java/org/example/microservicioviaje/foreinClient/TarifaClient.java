@@ -5,13 +5,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(name = "microservicio-administrador-tarifa", url = "http://localhost:8007/tarifas")
+@FeignClient(name = "microservicio-administrador-tarifa", url = "http://localhost:8007")
 public interface TarifaClient {
 
-  //  @GetMapping("/actual")
-  //  TarifaDTO obtenerTarifaActual();
-
-    @GetMapping("/actual")
+    @GetMapping("/tarifas/actual")
     ResponseEntity<TarifaDTO> obtenerUltimaTarifa();
 
 
