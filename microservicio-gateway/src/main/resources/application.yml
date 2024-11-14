@@ -17,7 +17,7 @@ spring:
           - id: microviaje
             uri: http://localhost:8010
             predicates:
-              - Path=/viajes/**,/pausas**
+              - Path=/viajes/**,/pausas/**
           - id: microadministrador
             uri: http://localhost:8007
             predicates:

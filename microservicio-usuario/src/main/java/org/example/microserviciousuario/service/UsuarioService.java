@@ -31,19 +31,16 @@ public class UsuarioService {
     private UsuarioMapper usuarioMapper;
 
 
+    //Crear Usuarios
     public List<Usuario> agregarUsuarios(List<UsuarioDTO> usuariosDTO) {
-        usuariosDTO.forEach(usuarioDTO -> {
-            validarEmail(usuarioDTO.getEmail());
-            if (usuarioDTO.getContrasenia() == null || usuarioDTO.getContrasenia().isEmpty()) {
-                throw new IllegalArgumentException("La contraseña no puede estar vacía");
-            }
-        });
         List<Usuario> usuarios = usuariosDTO.stream()
                 .map(usuarioMapper::mapToEntity)
                 .collect(Collectors.toList());
+
         return usuarioRepository.saveAll(usuarios);
     }
 
+    //Listar Usuarios
     public List<UsuarioDTO> findAll() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         return usuarios.stream()
@@ -51,8 +48,8 @@ public class UsuarioService {
                 .collect(Collectors.toList());
     }
 
+    //Crear Usuario
     public Usuario save(UsuarioDTO usuarioDTO) {
-        validarEmail(usuarioDTO.getEmail());
         if (usuarioDTO.getContrasenia() == null || usuarioDTO.getContrasenia().isEmpty()) {
             throw new IllegalArgumentException("La contraseña no puede estar vacía");
         }
@@ -60,33 +57,52 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public UsuarioDTO findById(Long cuentaId) {
-        Usuario usuario = usuarioRepository.findById(cuentaId)
+    //Buscar Usuario por Id
+    public UsuarioDTO findById(Long usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         return usuarioMapper.mapToDTO(usuario);
     }
 
+    //Modificar Usuario
     public UsuarioDTO update(Long id, UsuarioDTO usuarioDTO) {
-        Usuario usuarioExistente = usuarioRepository.findById(id)
+       Usuario usuarioExistente = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+       if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().trim().isEmpty()) {
             usuarioExistente.setNombre(usuarioDTO.getNombre());
+        } else if (usuarioDTO.getNombre() != null && usuarioDTO.getNombre().trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
+        if (usuarioDTO.getEmail() != null && !usuarioDTO.getEmail().trim().isEmpty()) {
             usuarioExistente.setEmail(usuarioDTO.getEmail());
-            Usuario usuarioActualizado = usuarioRepository.save(usuarioExistente);
-            return usuarioMapper.mapToDTO(usuarioActualizado);
+        } else if (usuarioDTO.getEmail() != null && usuarioDTO.getEmail().trim().isEmpty()) {
+            throw new IllegalArgumentException("El email no puede estar vacío");
+        }
+        if (usuarioDTO.getLatitud() != 0) {
+            usuarioExistente.setLatitud(usuarioDTO.getLatitud());
+        }
+        if (usuarioDTO.getLongitud() != 0) {
+            usuarioExistente.setLongitud(usuarioDTO.getLongitud());
+        }
+        Usuario usuarioActualizado = usuarioRepository.save(usuarioExistente);
 
+        return usuarioMapper.mapToDTO(usuarioActualizado);
     }
 
-    // Eliminar un usuario
-    public void delete(Long cuentaId) {
-        Usuario usuario = usuarioRepository.findById(cuentaId)
+
+    //Eliminar usuario
+    public void delete(Long usuarioId) {
+       Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        usuarioRepository.save(usuario);
+        usuarioRepository.delete(usuario);
     }
 
-
+    //Punto g- Listar monopatines cercanos
     public List<ReporteMonopatinesCercanosDTO> obtenerMonopatinesCercanos(Long usuarioId, double radio) {
-        Usuario usuario = obtenerUsuarioPorId(usuarioId);
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         double latitudUsuario = usuario.getLatitud();
         double longitudUsuario = usuario.getLongitud();
@@ -114,24 +130,6 @@ public class UsuarioService {
         }
     }
 
-    private void validarEmail(String email) {
-        if (!isValidEmail(email)) {
-            throw new InvalidEmailException("El correo electrónico no es válido.");
-        }
-        if (usuarioRepository.existsByEmail(email)) {
-            throw new EmailAlreadyExistsException("Ya existe un usuario con el mismo email.");
-        }
-    }
-
-
-    private boolean isValidEmail(String email) {
-        return email != null && email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$");
-    }
-
-    private Usuario obtenerUsuarioPorId(Long usuarioId) {
-        return usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new UsuarioNotFoundException("Usuario no encontrado"));
-    }
 
     private double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
         final int R = 6371; // Radio de la Tierra en km

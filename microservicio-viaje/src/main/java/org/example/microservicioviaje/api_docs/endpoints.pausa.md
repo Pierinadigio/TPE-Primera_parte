@@ -5,7 +5,7 @@ Este repositorio contiene la implementación de una API RESTful para gestionar l
 ## Endpoints
 
 ### 1. **Crear una pausa**
-- **URL**: `/pausas/alta/{viajeId}`
+- **URL**: `/pausas/altaPausa/{viajeId}`
 - **Método HTTP**: `POST`
 - **Descripción**: Crea una pausa para un viaje en específico, registrando el inicio y el fin de la pausa.
 - **Parámetros de consulta**:
@@ -19,5 +19,43 @@ Este repositorio contiene la implementación de una API RESTful para gestionar l
     - **Código de estado**: `404 Not Found` si el viaje no existe.
 
 **Ejemplo de solicitud**:
-   ```http
-   POST /pausas/alta/1?horaInicio=2024-11-10T08:00:00&horaFin=2024-11-10T08:10:00
+``json
+  {
+  "viajeId": 5,
+  "horaInicio": "2024-11-14T10:00:00",
+  "horaFin": "2024-11-14T10:30:00"
+  }
+
+
+### 2. Obtener un viaje por ID
+- **URL**: `/pausas/{pausaId}`
+- **Método**: `GET`
+- **Descripción**: Obtiene los detalles de un pausa específico por su ID.
+- **Parámetros de ruta**:
+  - `id` (Long) - ID del pausa.
+- **Código de respuesta**: `200 OK` - Retorna el objeto 
+
+---
+
+### 3. Actualizar un viaje
+- **URL**: `/pausas/{pausaId}`
+- **Método**: `PUT`
+- **Descripción**: Actualiza un pausa existente.
+- **Parámetros de ruta**:
+  - `id` (Long) - ID del pausa a actualizar.
+- **Cuerpo de la solicitud**:
+   
+    ```
+- **Código de respuesta**: `200 OK` - .
+
+---
+
+### 4. Eliminar un pausa
+- **URL**: `/pausas/{id}`
+- **Método**: `DELETE`
+- **Descripción**: Elimina una pausa por su ID.
+- **Parámetros de ruta**:
+  - `id` (Long) - ID del pausa a eliminar.
+- **Código de respuesta**: `204 No Content` - .
+
+---

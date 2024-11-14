@@ -102,7 +102,7 @@ Este microservicio gestiona las operaciones relacionadas con las cuentas, incluy
 - **Descripción**: Verifica si una cuenta existe en el sistema.
 - **Parámetros de ruta**:
     - `id` (Long) - ID de la cuenta.
-- **Código de respuesta**: `200 OK` - Retorna `true` si la cuenta existe, `false` si no existe.
+- **Código de respuesta**: `200 OK` - 
 
 ---
 

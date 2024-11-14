@@ -1,6 +1,7 @@
 package org.example.microservicioviaje.controller;
 
 
+import jakarta.validation.Valid;
 import org.example.microservicioviaje.entity.Viaje;
 import org.example.microservicioviaje.service.ViajeService;
 import org.example.shareddto.DTO.ReporteMonopatinDTO;
@@ -23,7 +24,7 @@ public class ViajeController {
 
     //Endpoint para dar de alta un viaje
     @PostMapping
-    public ResponseEntity<ViajeDTO> crearViaje(@RequestBody ViajeDTO viajeDTO) {
+    public ResponseEntity<ViajeDTO> crearViaje(@Valid @RequestBody ViajeDTO viajeDTO) {
         ViajeDTO viajeCreado = viajeService.guardarViaje(viajeDTO);
         return new ResponseEntity<>(viajeCreado, HttpStatus.CREATED);
     }
@@ -44,14 +45,16 @@ public class ViajeController {
 
     // Endpoint para actualizar un viaje
     @PutMapping("/{id}")
-    public ResponseEntity<ViajeDTO> updateViaje(@PathVariable Long viajeId, @RequestBody ViajeDTO viajeDTO) {
+    public ResponseEntity<ViajeDTO> updateViaje(@PathVariable Long id, @Valid @RequestBody ViajeDTO viajeDTO) {
+        System.out.println("Recibiendo datos: " + viajeDTO);  // Agrega esto para ver qué datos estás recibiendo
         try {
-            ViajeDTO updatedViaje = viajeService.updateViaje(viajeId, viajeDTO);
+            ViajeDTO updatedViaje = viajeService.updateViaje(id, viajeDTO);
             return ResponseEntity.ok(updatedViaje);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+
 
     // Endpoint para eliminar un viaje
     @DeleteMapping("/{id}")
@@ -63,7 +66,7 @@ public class ViajeController {
 
     //Endpoint para varios viajes
     @PostMapping("/altaViajes")
-    public ResponseEntity<List<ViajeDTO>> altaViajes(@RequestBody List<ViajeDTO> viajeDTOs) {
+    public ResponseEntity<List<ViajeDTO>> altaViajes(@Valid@RequestBody List<ViajeDTO> viajeDTOs) {
         List<ViajeDTO> viajesGuardados = viajeService.altaViajes(viajeDTOs);
         return ResponseEntity.ok(viajesGuardados);
     }

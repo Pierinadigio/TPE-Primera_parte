@@ -1,5 +1,6 @@
 package org.example.microservicioviaje.service;
 
+import jakarta.validation.Valid;
 import org.example.microservicioadministrador.exception.ResourceNotFoundException;
 import org.example.microservicioviaje.entity.Pausa;
 import org.example.microservicioviaje.entity.Viaje;
@@ -119,15 +120,59 @@ public class ViajeService {
         return viaje;
     }
 
-    public ViajeDTO updateViaje(Long viajeId, ViajeDTO viajeDTO) {
-       Viaje viajeExistente = viajeRepository.findById(viajeId)
-                .orElseThrow(() -> new IllegalArgumentException("Viaje no encontrado"));
 
-        viajeExistente.setFechaFin(viajeDTO.getFechaFin());
-        viajeExistente.setTotalKmRecorridos(viajeDTO.getTotalKmRecorridos());
-        viajeExistente.setCostoTotal(viajeDTO.getCostoTotal());
-        viajeRepository.save(viajeExistente);
-        return viajeMapper.mapToDTO(viajeExistente);
+    public ViajeDTO updateViaje(Long viajeId, ViajeDTO viajeDTO) {
+        try {
+            System.out.println("Iniciando actualización del viaje con ID: " + viajeId);
+
+            Viaje viajeExistente = viajeRepository.findById(viajeId)
+                    .orElseThrow(() -> new RuntimeException("Viaje no encontrado con ID: " + viajeId));
+            boolean updated = false;
+
+            if (viajeDTO.getFechaFin() != null && !viajeDTO.getFechaFin().equals(viajeExistente.getFechaFin())) {
+                viajeExistente.setFechaFin(viajeDTO.getFechaFin());
+                updated = true;
+            }
+            if (viajeDTO.getCostoTotal() != null && !viajeDTO.getCostoTotal().equals(viajeExistente.getCostoTotal())) {
+                viajeExistente.setCostoTotal(viajeDTO.getCostoTotal());
+                updated = true;
+            }
+            if (viajeDTO.getTotalKmRecorridos() != null && !viajeDTO.getTotalKmRecorridos().equals(viajeExistente.getTotalKmRecorridos())) {
+                if (viajeDTO.getTotalKmRecorridos() >= 0) {
+                    viajeExistente.setTotalKmRecorridos(viajeDTO.getTotalKmRecorridos());
+                    updated = true;
+                } else {
+                    throw new IllegalArgumentException("El total de kilómetros recorridos no puede ser negativo.");
+                }
+            }
+            if (viajeDTO.getTotalTiempo() != null && !viajeDTO.getTotalTiempo().equals(viajeExistente.getTotalTiempo())) {
+                if (viajeDTO.getTotalTiempo() >= 0) {
+                    viajeExistente.setTotalTiempo(viajeDTO.getTotalTiempo());
+                    updated = true;
+                } else {
+                    throw new IllegalArgumentException("El total de tiempo no puede ser negativo.");
+                }
+            }
+            if (viajeDTO.getTotalTiempoUsoSinPausas() != null && !viajeDTO.getTotalTiempoUsoSinPausas().equals(viajeExistente.getTotalTiempoUsoSinPausas())) {
+                if (viajeDTO.getTotalTiempoUsoSinPausas() >= 0) { // Permitir 0, pero no valores negativos
+                    viajeExistente.setTotalTiempoUsoSinPausas(viajeDTO.getTotalTiempoUsoSinPausas());
+                    updated = true;
+                } else {
+                    throw new IllegalArgumentException("El total de tiempo de uso sin pausas no puede ser negativo.");
+                }
+            }
+            if (!updated) {
+                throw new IllegalArgumentException("No se encontraron cambios en el viaje.");
+            }
+            Viaje updatedViaje = viajeRepository.save(viajeExistente);
+            System.out.println("Viaje actualizado con éxito.");
+
+            return viajeMapper.mapToDTO(updatedViaje);
+
+        } catch (Exception e) {
+            System.out.println("Error en la actualización del viaje: " + e.getMessage());
+            throw new RuntimeException("Error en la actualización del viaje", e);
+        }
     }
 
 
@@ -175,7 +220,6 @@ public class ViajeService {
     public void pausarViaje(Long viajeId) {
         Viaje viaje = viajeRepository.findById(viajeId)
                 .orElseThrow(() -> new IllegalArgumentException("Viaje no encontrado"));
-
         Pausa nuevaPausa = new Pausa();
         nuevaPausa.setViaje(viaje);
         nuevaPausa.setHoraInicio(LocalDateTime.now());  // Establece hora de inicio

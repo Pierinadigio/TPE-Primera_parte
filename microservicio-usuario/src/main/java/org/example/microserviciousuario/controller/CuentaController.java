@@ -62,6 +62,7 @@ public class CuentaController {
         return cuentaService.existeCuenta(cuentaId);
     }
 
+
     @PostMapping("/{cuentaId}/usuarios/{usuarioId}")
     public ResponseEntity<Void> agregarUsuarioACuenta(@PathVariable Long cuentaId, @PathVariable Long usuarioId) {
         cuentaService.asociarUsuarioACuenta(cuentaId, usuarioId);
@@ -83,10 +84,8 @@ public class CuentaController {
 
     @PutMapping("/{cuentaId}/anular")
     public ResponseEntity<Void> anularCuenta(@PathVariable Long cuentaId, @RequestBody CuentaDTO cuentaDTO) {
-        // Delegamos la tarea de anulación al servicio
         cuentaService.anularCuenta(cuentaId, cuentaDTO);
 
-        // Retornamos una respuesta sin contenido (HTTP 204)
         return ResponseEntity.noContent().build();
     }
 

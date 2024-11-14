@@ -14,6 +14,7 @@ public class Pausa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "pausa_id")
     private Long id;
 
     @ManyToOne
@@ -26,7 +27,6 @@ public class Pausa {
     @Column(name = "hora_fin")
     private LocalDateTime horaFin;
 
-    @Column(name = "duracion", nullable = false)
     private Long duracion;
 
     public void setHoraFin(LocalDateTime horaFin) {

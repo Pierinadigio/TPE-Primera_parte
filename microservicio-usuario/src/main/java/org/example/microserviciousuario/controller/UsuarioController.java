@@ -61,7 +61,7 @@ public class UsuarioController {
     @GetMapping("/{usuarioId}/monopatines-cercanos")
     public ResponseEntity<List<ReporteMonopatinesCercanosDTO>> obtenerMonopatinesCercanos(
             @PathVariable Long usuarioId,
-            @RequestParam(defaultValue = "1") double radio) { // Radio por defecto de 1 km
+            @RequestParam(defaultValue = "5") double radio) { // Radio por defecto de 5 km
 
         List<ReporteMonopatinesCercanosDTO> monopatinesCercanos = usuarioService.obtenerMonopatinesCercanos(usuarioId, radio);
 

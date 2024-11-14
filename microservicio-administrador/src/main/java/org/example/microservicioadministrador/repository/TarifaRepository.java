@@ -12,4 +12,9 @@ public interface TarifaRepository extends JpaRepository<Tarifa, Long> {
 
     //Busca tarifas anteriores a la fecha de actualizacion
    List<Tarifa> findByFechaBefore(LocalDate fecha);
+
+
+    //Busca tarifas anteriores a la fecha de actualizacion
+    List<Tarifa> findByFechaAfter(LocalDate fecha);
+
 }

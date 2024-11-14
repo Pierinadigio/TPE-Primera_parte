@@ -10,13 +10,13 @@ public class ViajeDTO {
     private Long cuentaId;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
-    private long monopatinId;
+    private Long monopatinId;
     private boolean enPausa;
     private boolean fuePausado;
-    private double costoTotal;
-    private double totalKmRecorridos;
-    private long totalTiempo;
-    private long totalTiempoUsoSinPausas;
+    private Double costoTotal;
+    private Double totalKmRecorridos;
+    private Long totalTiempo;
+    private Long totalTiempoUsoSinPausas;
 
 
 }

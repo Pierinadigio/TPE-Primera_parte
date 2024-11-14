@@ -5,11 +5,13 @@ import org.example.microservicioviaje.entity.Viaje;
 import org.example.microservicioviaje.repository.PausaRepository;
 import org.example.microservicioviaje.repository.ViajeRepository;
 import org.example.microservicioviaje.service.Mapper.PausaMapper;
+import org.example.shareddto.DTO.entity.PausaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-
+import java.util.List;
+import java.util.stream.Collectors;
 @Service
 public class PausaService {
 
@@ -23,21 +25,53 @@ public class PausaService {
     private PausaMapper pausaMapper;
 
 
-    public Pausa altaPausa(Long viajeId, LocalDateTime horaInicio, LocalDateTime horaFin) {
+    public PausaDTO altaPausa(Long viajeId, LocalDateTime horaInicio, LocalDateTime horaFin) {
+        // Buscar el viaje por su ID
         Viaje viaje = viajeRepository.findById(viajeId)
                 .orElseThrow(() -> new IllegalArgumentException("El viaje no existe."));
 
-        Pausa pausa = new Pausa();
-        pausa.setViaje(viaje);
-        pausa.setHoraInicio(horaInicio);
-        pausa.setHoraFin(horaFin);
+        // Crear el DTO Pausa y establecer sus propiedades
+        PausaDTO pausaDTO = new PausaDTO();
+        pausaDTO.setHoraInicio(horaInicio);
+        pausaDTO.setHoraFin(horaFin);
+        pausaDTO.setViajeId(viajeId);
+
+        Pausa pausa = pausaMapper.mapToEntity(pausaDTO);
         pausa.calcularDuracion();
         pausaRepository.save(pausa);
 
         viaje.getPausas().add(pausa);
         viajeRepository.save(viaje);
-        return pausa;
+
+        return pausaMapper.mapToDTO(pausa);
     }
 
 
+
+    public PausaDTO obtenerPausa(Long pausaId) {
+        Pausa pausa = pausaRepository.findById(pausaId)
+                .orElseThrow(() -> new IllegalArgumentException("La pausa no existe."));
+
+        return pausaMapper.mapToDTO(pausa);
+    }
+
+
+    public PausaDTO actualizarPausa(Long pausaId, LocalDateTime horaInicio, LocalDateTime horaFin) {
+        Pausa pausaExistente = pausaRepository.findById(pausaId)
+                .orElseThrow(() -> new IllegalArgumentException("La pausa no existe."));
+
+        pausaExistente.setHoraInicio(horaInicio);
+        pausaExistente.setHoraFin(horaFin);
+
+        pausaRepository.save(pausaExistente);
+        return pausaMapper.mapToDTO(pausaExistente);
+    }
+
+
+    public void eliminarPausa(Long pausaId) {
+        Pausa pausaExistente = pausaRepository.findById(pausaId)
+                .orElseThrow(() -> new IllegalArgumentException("La pausa no existe."));
+
+        pausaRepository.delete(pausaExistente);
+    }
 }

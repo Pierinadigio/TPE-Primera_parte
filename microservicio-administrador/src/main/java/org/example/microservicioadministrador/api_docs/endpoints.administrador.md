@@ -8,7 +8,7 @@ Este microservicio está diseñado para gestionar las funciones administrativas,
 ## Endpoints de Administrador
 
 ### 1. Anular una cuenta
-- **URL**: `/administrador/{cuentaId}/anular`
+- **URL**: `/administrador/cuenta/{cuentaId}/anular`
 - **Método**: `PUT`
 - **Descripción**: Anula una cuenta de usuario identificada por su `cuentaId`.
 - **Parámetros de ruta**:

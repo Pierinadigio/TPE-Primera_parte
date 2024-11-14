@@ -20,8 +20,8 @@ Este microservicio gestiona las operaciones relacionadas con los usuarios, inclu
             "apellido": "Perez",
             "celular": "1234567890",
             "email": "juan.perez@example.com",
-            "latitud": 15,
-            "longitud": 30
+            "latitud": -37.1234,
+            "longitud": -59.4568
         },
         {
             "contrasenia": "password456",
@@ -29,11 +29,11 @@ Este microservicio gestiona las operaciones relacionadas con los usuarios, inclu
             "apellido": "Lopez",
             "celular": "0987654321",
             "email": "maria.lopez@example.com",
-            "latitud": 25,
-            "longitud": 50
+            "latitud": -37.4587,
+            "longitud": -59.3549
         }
-    ]
-    ```
+     ```
+  - **Código de respuesta**: `201 OK`
 
 ---
 
@@ -52,13 +52,13 @@ Este microservicio gestiona las operaciones relacionadas con los usuarios, inclu
 - **Cuerpo de la solicitud**:
     ```json
     {
-        "contrasenia": "password123",
-        "nombre": "Carlos",
-        "apellido": "Sanchez",
-        "celular": "9876543210",
-        "email": "carlos.sanchez@example.com",
-        "latitud": 40.712500,
-        "longitud": 74.005500
+        "contrasenia": "password888",
+        "nombre": "Ana",
+        "apellido": "Lopez",
+        "celular": "987654321",
+        "email": "ana.lolo@example.com",
+        "latitud": -37.3150,
+        "longitud": -59.1350
     }
     ```
 ---
@@ -87,8 +87,8 @@ Este microservicio gestiona las operaciones relacionadas con los usuarios, inclu
         "apellido": "Sanchez",
         "celular": "9876543210",
         "email": "carlos.sanchez@newemail.com",
-        "latitud": 40.712900,
-        "longitud": -74.005600
+        "latitud": -37.7129,
+        "longitud": -59.0056
     }
     ```
 ---
@@ -110,7 +110,7 @@ Este microservicio gestiona las operaciones relacionadas con los usuarios, inclu
 - **Parámetros de ruta**:
     - `usuarioId` (Long) - ID del usuario para obtener los monopatines cercanos.
 - **Parámetros de consulta**:
-    - `radio` (double, opcional, valor predeterminado: `1.0`) - Radio en kilómetros para buscar los monopatines cercanos.
+    - `radio` (double, opcional, valor predeterminado: `5.0`) - Radio en kilómetros para buscar los monopatines cercanos.
 - **Código de respuesta**: `200 OK` - Retorna una lista de objetos `ReporteMonopatinesCercanosDTO`.
 
 ---

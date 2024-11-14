@@ -21,7 +21,7 @@ public class AdministradorController {
 
 
     // Punto b- Endpoint para anular una cuenta
-    @PutMapping("/{cuentaId}/anular")
+    @PutMapping("/cuenta/{cuentaId}/anular")
     public ResponseEntity<Void> anularCuenta(@PathVariable Long cuentaId) {
         administradorService.anularCuenta(cuentaId);
         return ResponseEntity.noContent().build();  // Devuelve un HTTP 204 sin contenido
@@ -53,8 +53,8 @@ public class AdministradorController {
     //Puento e- Endpoint para consultar la cantidad de monopatines en operacion vs en mantenimiento
     @GetMapping("/estado-monopatines")
     public ResponseEntity<Map<String, Long>> obtenerEstadoMonopatines() {
-        administradorService.consultarEstadoMonopatines();
-        return ResponseEntity.ok().build();
+        Map<String, Long> reporte = administradorService.consultarEstadoMonopatines();
+        return ResponseEntity.ok(reporte);
     }
 
     //Punto f- Endpoint para realizar ajuste de precios a partir de cierta fecha

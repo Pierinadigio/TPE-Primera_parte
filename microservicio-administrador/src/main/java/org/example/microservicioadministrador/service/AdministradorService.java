@@ -88,9 +88,21 @@ public class AdministradorService {
         }
     }
 
+    //Punto e- Consultar estado de monopatines(en-operacion vs en-mantenimiento)
+    public  Map<String, Long> consultarEstadoMonopatines() {
+        Map<String, Long> reporte = monopatinClient.obtenerReporteEstadoMonopatines();
+
+        long enOperacion = reporte.get("en_operacion");
+        long enMantenimiento = reporte.get("en_mantenimiento");
+
+        System.out.println("Monopatines en operación: " + enOperacion);
+        System.out.println("Monopatines en mantenimiento: " + enMantenimiento);
+        return reporte;
+    }
+
     //Punto f- Endpoint para realizar ajuste de precios a partir de cierta fecha
     public void ajustarTarifas(LocalDate fechaAjuste, double porcentajeBase, double porcentajeExtra) {
-        List<Tarifa> tarifas = tarifaRepository.findByFechaBefore(fechaAjuste);
+        List<Tarifa> tarifas = tarifaRepository.findByFechaAfter(fechaAjuste);
 
         for (Tarifa tarifa : tarifas) {
 
@@ -104,6 +116,7 @@ public class AdministradorService {
     public MonopatinDTO agregarMonopatin(MonopatinDTO monopatin) {
         return monopatinClient.guardarMonopatin(monopatin);
     }
+
 
     public void quitarMonopatin(Long id) {
         try {
@@ -124,15 +137,6 @@ public class AdministradorService {
     }
 
 
-    public void consultarEstadoMonopatines() {
-        Map<String, Long> reporte = monopatinClient.obtenerReporteEstadoMonopatines();
-
-        long enOperacion = reporte.get("en_operacion");
-        long enMantenimiento = reporte.get("en_mantenimiento");
-
-        System.out.println("Monopatines en operación: " + enOperacion);
-        System.out.println("Monopatines en mantenimiento: " + enMantenimiento);
-    }
 
 
 }

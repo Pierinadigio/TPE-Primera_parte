@@ -23,4 +23,6 @@ public class UsuarioDTO {
         this.latitud = latitud;
         this.longitud = longitud;
     }
+
+
 }

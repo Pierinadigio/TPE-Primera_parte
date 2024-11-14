@@ -1,6 +1,10 @@
 package org.example.microservicioviaje.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,20 +14,40 @@ import java.util.List;
 public class Viaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "viaje_id")
     private Long id;
+
     @Column(name = "cuenta_id", nullable = false)
+    @NotNull(message = "El ID de la cuenta no puede ser nulo.")
     private Long cuentaId;
+
     @Column(nullable = false)
+    @NotNull(message = "La fecha de inicio es obligatoria.")
     private LocalDateTime fechaInicio;
+
     private LocalDateTime fechaFin;
-    private long monopatinId;
+
+    @Column(nullable = false)
+    @Min(value = 1, message = "El monopatín ID debe ser un valor positivo.")
+    private Long monopatinId;
+
+    @NotNull(message = "El estado de pausa no puede ser nulo.")
     private boolean enPausa;
+
     private boolean fuePausado;
-    private double costoTotal;
+
+    private Double costoTotal;
+
+    @Min(value = 1, message = "El tiempo máximo de pausa no puede ser menor que 1 minuto.")
     private final long pausaMAX = 15;
-    private double totalKmRecorridos;
-    private long totalTiempo;
-    private long totalTiempoUsoSinPausas;
+
+    private Double totalKmRecorridos;
+
+    @Min(value = 0, message = "El total de tiempo no puede ser negativo.")
+    private Long totalTiempo;
+
+    private Long totalTiempoUsoSinPausas;
+
     @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Pausa> pausas;
 
