@@ -14,7 +14,6 @@ import java.util.List;
 public class Viaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "viaje_id")
     private Long id;
 
     @Column(name = "cuenta_id", nullable = false)

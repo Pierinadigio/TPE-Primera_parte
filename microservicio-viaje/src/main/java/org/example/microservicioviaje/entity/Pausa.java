@@ -14,7 +14,6 @@ public class Pausa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pausa_id")
     private Long id;
 
     @ManyToOne

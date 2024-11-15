@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/pausas")
@@ -66,8 +67,13 @@ public class PausaController {
     // Endpoint para eliminar una pausa
     @DeleteMapping("/{pausaId}")
     public ResponseEntity<Void> eliminarPausa(@PathVariable Long pausaId) {
-        // Llamamos al servicio para eliminar la pausa
         pausaService.eliminarPausa(pausaId);
         return ResponseEntity.noContent().build();
+    }
+
+    // Endpoint para obtener todas las pausas
+    @GetMapping
+    public List<PausaDTO> obtenerTodasLasPausas() {
+        return pausaService.obtenerTodasLasPausas();
     }
 }

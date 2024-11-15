@@ -139,7 +139,6 @@ public class MantenimientoService {
                     }
                 }
             } else {
-                // Si no se pudo obtener el reporte, lanzar una excepción
                 throw new RuntimeException("No se pudo obtener el reporte de uso de los monopatines.");
             }
         } catch (Exception e) {

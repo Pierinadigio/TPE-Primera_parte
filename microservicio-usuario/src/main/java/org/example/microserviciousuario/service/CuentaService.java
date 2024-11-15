@@ -133,7 +133,7 @@ public class CuentaService {
                 .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
 
         if (cuenta.isAnulada()) {
-            throw new RuntimeException("La cuenta ya está anulada");
+            throw new RuntimeException("La cuenta ya está anulada" );
         }
 
         cuenta.setAnulada(cuentaDTO.isAnulada());

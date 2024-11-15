@@ -9,7 +9,7 @@ public class ReporteMonopatinesXviajesDTO {
     private long cantidadMonopatines;
     private long minimoViajes;
 
-    // Constructor
+
     public ReporteMonopatinesXviajesDTO(List<ReporteMonopatinDTO> monopatines, long cantidadMonopatines, Long minViajes) {
         this.monopatines = monopatines;
         this.cantidadMonopatines = cantidadMonopatines;

@@ -41,6 +41,9 @@ public class PausaService {
         pausaRepository.save(pausa);
 
         viaje.getPausas().add(pausa);
+        viaje.setEnPausa(true);
+        viaje.setFuePausado(true);
+
         viajeRepository.save(viaje);
 
         return pausaMapper.mapToDTO(pausa);
@@ -73,5 +76,12 @@ public class PausaService {
                 .orElseThrow(() -> new IllegalArgumentException("La pausa no existe."));
 
         pausaRepository.delete(pausaExistente);
+    }
+
+    public List<PausaDTO> obtenerTodasLasPausas() {
+        List<Pausa> pausas = pausaRepository.findAll();
+        return pausas.stream()
+                .map(pausaMapper::mapToDTO)
+                .collect(Collectors.toList());
     }
 }

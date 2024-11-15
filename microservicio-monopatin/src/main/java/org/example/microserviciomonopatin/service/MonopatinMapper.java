@@ -24,7 +24,7 @@ public class MonopatinMapper {
         );
     }
 
-    // Mapea de MonopatinDTO a la entidad Monopatin
+
     public Monopatin mapToEntity(MonopatinDTO monopatinDTO) {
         if (monopatinDTO == null) {
             return null;

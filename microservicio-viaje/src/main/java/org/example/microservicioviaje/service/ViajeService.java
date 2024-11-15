@@ -222,7 +222,7 @@ public class ViajeService {
                 .orElseThrow(() -> new IllegalArgumentException("Viaje no encontrado"));
         Pausa nuevaPausa = new Pausa();
         nuevaPausa.setViaje(viaje);
-        nuevaPausa.setHoraInicio(LocalDateTime.now());  // Establece hora de inicio
+        nuevaPausa.setHoraInicio(LocalDateTime.now());
         nuevaPausa.setHoraFin(null);  // Deja horaFin como null al inicio
         nuevaPausa.setDuracion(0L);  // Inicializa la duración a 0
         pausaRepository.save(nuevaPausa);
@@ -342,13 +342,11 @@ public class ViajeService {
 
             // Calcular duraciones
             long duracion1 = inicioPausaPermitida - inicioViajeEnMinutos; // Desde el inicio del viaje hasta el primer minuto después de la pausa
-            long duracion2 = tiempoTotalViaje - duracion1; // Desde el primer minuto después de la pausa hasta el final del viaje
-
+            long duracion2 = tiempoTotalViaje - duracion1;
             // Cálculo del costo
             costoTotal += (duracion1 * tarifaActual.getTarifaBasePorMinuto()) +
                     (duracion2 * tarifaActual.getTarifaExtraPorMinuto());
         } else {
-            // Si no hay pausas que excedan, solo se aplica la tarifa base
             costoTotal = tiempoTotalViaje * tarifaActual.getTarifaBasePorMinuto();
         }
 

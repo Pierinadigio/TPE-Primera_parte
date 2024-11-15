@@ -77,6 +77,7 @@ public class ViajeController {
         List<ViajeDTO> viajes = viajeService.obtenerViajes();
         return ResponseEntity.ok(viajes);
     }
+
     // Endpoint para pausar un viaje
     @PostMapping("/{id}/pausar")
     public ResponseEntity<Void> pausarViaje(@PathVariable Long id) {

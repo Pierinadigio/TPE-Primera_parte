@@ -16,15 +16,15 @@ public class PausaMapper {
         pausa.setDuracion(pausaDTO.getDuracion());
         Viaje viaje = new Viaje();
         viaje.setId(pausaDTO.getViajeId());
-        pausa.setViaje(viaje);  // Asocia la entidad viaje
+        pausa.setViaje(viaje);
         return pausa;
     }
 
-    // Mapea la entidad Pausa a PausaDTO para la respuesta
+
     public PausaDTO mapToDTO(Pausa pausa) {
         PausaDTO dto = new PausaDTO();
         dto.setId(pausa.getId());
-        dto.setViajeId(pausa.getViaje().getId());  // En el DTO solo ponemos el ID del viaje
+        dto.setViajeId(pausa.getViaje().getId());
         dto.setHoraInicio(pausa.getHoraInicio());
         dto.setHoraFin(pausa.getHoraFin());
         dto.setDuracion(pausa.getDuracion());
